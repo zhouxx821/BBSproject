@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ManagerMapper">
+    <select id="judgeM" resultType="com.entity.User">
+        select * from user where utype=3 and pwd=#{pwd} and tel=#{tel};
+    </select>
+    <select id="allUser" resultType="com.entity.User">
+        select * from user where utype=2 or utype=1;
+    </select>
+    <select id="getResultCount" resultType="java.lang.Integer">
+        select count(*) from user where utype=1 or utype=2;
+    </select>
+    <update id="banUser">
+        update  user set status=-1 where uid=#{id};
+    </update>
+    <update id="release">
+        update  user set status=1 where uid=#{id};
+    </update>
+    <insert id="addType">
+        insert  into area(name) values(#{name});
+    </insert>
+    <delete id="deleteType">
+        delete from area where name=#{name};
+    </delete>
+    <update id="setNormal">
+        update user set utype=1 where areaId=#{id};
+    </update>
+    <update id="setPoster">
+        update user set utype=2,areaId=#{id} where uid=#{uid};
+    </update>
+</mapper>

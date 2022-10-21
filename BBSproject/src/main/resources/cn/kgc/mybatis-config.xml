@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+
+<configuration>
+    <!--jdbc.properties配置文件-->
+    <properties resource="jdbc.properties"></properties>
+    <!--setttings:控制mybatis全局配置行为-->
+    <settings>
+        <!--设置mybatis输出日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--环境配置：数据库的连接信息-->
+    <!--default：中配置的值需要和某个environment配置的id相同，
+        通知mybatis使用具体哪一个数据库的连接信息，即具体访问对应的数据库-->
+    <environments default="development">
+        <!--environment:一个数据库信息的配置，环境-->
+        <!--id属性：一个唯一值，自定义，表示环境的名称-->
+        <environment id="development">
+            <!--transactionManager属性：mybatis的事务类型-->
+            <transactionManager type="JDBC" />
+            <!--dataSoure属性：代表数据源，连接数据库-->
+            <!--type属性:JDBC 表示使用的是使用连接池的数据源-->
+            <dataSource type="POOLED">
+                <!--配置驱动-->
+                <property name="driver" value="${driver}"/>
+                <!--配置连接数据库的url字符串-->
+                <property name="url" value="${jdbc.url}"/>
+                <!--配置连接数据库的用户名-->
+                <property name="username" value="${username}"/>
+                <!--配置连接数据库的密码-->
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--sql映射文件标签-->
+    <mappers>
+        <!--reource：从类路径开始的路径信息：target/clasess(类路径)-->
+        <mapper resource="cn/kgc/UserMapper.xml"/>
+        <mapper resource="cn/kgc/PostMapper.xml"/>
+        <mapper resource="cn/kgc/ManagerMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <select id="findOne" resultType="java.lang.Integer">
+        select IFNULL(MAX(utype),0) AS utype from user where tel=#{tel} and pwd=#{pwd} ;
+    </select>
+    <update id="updateToken">
+        update user set token=#{token} where uid=#{uid};
+    </update>
+    <select id="getArea">
+        select name from area where id=#{id};
+    </select>
+    <insert id="addUser" parameterType="com.entity.User">
+        insert into user(uname,sex,pwd,utype,tel,email,tname,status,img) values(#{uname},#{sex},#{pwd},1,#{tel},#{email},#{tname},1,#{img})
+    </insert>
+    <select id="getId" resultType="java.lang.Integer">
+        select uid from user where tel=#{tel} and pwd=#{pwd} ;
+    </select>
+    <select id="getStatus" resultType="java.lang.Integer">
+        select status from user where tel=#{tel} and pwd=#{pwd} ;
+    </select>
+    <select id="getAreaId" resultType="java.lang.Integer">
+        select areaId from user where tel=#{tel} and pwd=#{pwd} ;
+    </select>
+    <update id="updateUser" parameterType="com.entity.User">
+        update user set utype=#{utype} where uid = #{uid};
+    </update>
+    <select id="getInfo" resultType="com.entity.User">
+        select * from user where uid=#{id} ;
+    </select>
+    <update id="modify" parameterType="com.entity.User">
+        update user set email=#{email} , uname=#{uname},pwd=#{pwd} where tel=#{tel};
+    </update>
+    <insert id="addPost">
+        insert into post(tid,img,title,note,pubtime,istop,uid,cnum,anum) values(#{tid},#{img},#{title},#{note},#{pubtime},#{istop},#{uid},0,0);
+    </insert>
+    <select id="allMyPost" resultType="com.entity.Post">
+        select post.title,post.note,post.pubtime,post.istop,post.cnum,post.anum,area.name from post,area  where uid=#{id} and area.id=post.tid;
+    </select>
+    <delete id="deletePost">
+        delete from post where id = #{id};
+    </delete>
+    <delete id="delById" parameterType="com.entity.User" >
+        delete from user where uid = #{uid}
+    </delete>
+    <insert id="addComment">
+        insert into bbs(pubtime,text,pid,status,aid) values(#{pubtime},#{text},#{pid},1,#{aid});
+    </insert>
+    <select id="getMyComment" resultType="com.entity.Comment">
+        select * from bbs where aid=#{id};
+    </select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PostMapper">
+    <select id="getArea" resultType="com.entity.Area">
+        select * from area ;
+    </select>
+    <select id="post" resultType="com.entity.Post">
+        select * from post;
+    </select>
+    <select id="getResultCount" resultType="java.lang.Integer">
+        select count(*) from post;
+    </select>
+    <select id="getTid" resultType="java.lang.Integer">
+        select id from area where name=#{name};
+    </select>
+    <select id="getName" resultType="java.lang.String">
+        select name from area where id=#{id};
+    </select>
+    <update id="addLikes">
+        update post set cnum=cnum+1 where id=#{pid};
+    </update>
+    <select id="getTopPosts" resultType="com.entity.Post">
+        select * from post where tid=#{tid} and istop=1 order by pubtime asc;
+    </select>
+    <select id="getNoPosts" resultType="com.entity.Post">
+        select * from post where tid=#{tid} and istop=0 order by pubtime asc;
+    </select>
+    <select id="getTypeResultCount" resultType="java.lang.Integer">
+        select count(*) from post where tid=#{tid};
+    </select>
+    <select id="getInfo" resultType="com.entity.Post">
+        select * from post where id=#{id};
+    </select>
+    <select id="getPostUid" resultType="java.lang.Integer">
+        select uid from post where id=#{id};
+    </select>
+    <select id="getComments" resultType="com.entity.Comment">
+        select * from bbs where pid=#{pid} order by pubtime asc;
+    </select>
+    <delete id="deleteComment">
+        delete from bbs where id=#{id};
+    </delete>
+    <update id="topPost">
+        update post set istop=1 where id=#{id};
+    </update>
+    <update id="movePost">
+        update post set tid=#{tid} where id=#{id};
+    </update>
+    <select id="getHot" resultType="com.entity.Post">
+        select * from post order by cnum desc limit 4;
+    </select>
+    <select id="getTypeHot" resultType="com.entity.Post">
+        select * from post where tid=#{tid} order by cnum desc limit 4;
+    </select>
+    </mapper>
